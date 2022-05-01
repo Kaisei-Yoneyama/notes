@@ -1,0 +1,308 @@
+@import url('./util.css');
+
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  color: #333;
+  background-color: var(--base-color);
+  font-family:"MS Pゴシック",sans-serif;
+}
+
+#detail-modal-body img, video, audio, iframe,
+#rich-text-editor img, video, audio, iframe {
+  display: block !important;
+}
+
+#detail-modal-body *,
+#rich-text-editor * {
+  max-width: 100% !important;
+}
+
+.container {
+  margin-left: auto;
+  margin-right: auto;
+  width: var(--width);
+}
+
+/* --------------------
+    ナビゲーションバー
+-------------------- */
+
+.navbar {
+  margin: 0;
+  padding: 0.1em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+  color: #fff;
+  background-color: var(--main-color);
+  box-shadow: 0 0 10px var(--main-color);
+}
+
+.navbar-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: var(--width);
+}
+
+/* --------------------
+    メインコンテンツ
+-------------------- */
+
+main.container {
+  padding: 30px 0;
+}
+
+/* --------------------
+      検索フォーム
+-------------------- */
+
+#search-input {
+  width: 100%;
+  height: auto;
+  padding: 15px;
+  margin-top: 0;
+  margin-bottom: 30px;
+  margin-left: 0;
+  margin-right: 0;
+  outline: none;
+  border: none;
+  border-radius: 25px;
+  text-align: center;
+  font-size: large;
+  appearance: none;
+  -webkit-appearance: none;
+  background-color: #fff;
+}
+
+/* --------------------
+      編集フォーム
+-------------------- */
+
+#edit-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.toolbar {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  border: var(--border);
+  border-bottom: none;
+  padding: 5px 10px;
+}
+
+.tools,
+.commands {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.tool {
+  appearance: none;
+  background: none;
+  margin: 0;
+  padding: 0;
+  width: 25px;
+  height: 25px;
+  border: none;
+  outline: none;
+  display: block;
+  flex-shrink: 0;
+  cursor: pointer;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+.tool:not(:last-child) {
+  margin-right: 15px;
+}
+
+.tool.command {
+  height: 20px;
+  width: 20px;
+  margin: 0;
+}
+
+.line {
+  width: 2px;
+  height: 15px;
+  margin: 0 5px;
+  background: #333;
+}
+
+#file-input { display: none; }
+[for="file-input"] { background-image: url(../images/icons/tools/file_upload.svg); }
+#remove-format-button { background-image: url(../images/icons/tools/format_clear.svg);}
+#font-size-button { background-image: url(../images/icons/tools/format_size.svg); }
+#font-color-button { background-image: url(../images/icons/tools/palette.svg); }
+#link-button { background-image: url(../images/icons/tools/insert_link.svg); }
+#html-button { background-image: url(../images/icons/tools/code.svg); }
+#undo-button { background-image: url(../images/icons/tools/undo.svg); }
+#redo-button { background-image: url(../images/icons/tools/redo.svg); }
+
+.select {
+  margin: 0;
+  padding: 0;
+  display: none;
+  list-style: none;
+  appearance: none;
+  overflow: hidden;
+  border: var(--border);
+  border-radius: var(--border-radius);
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  user-select: none;
+  background: #fff;
+  position: absolute;
+  z-index: 3;
+  top: 35px;
+}
+
+.select.display {
+  display: block;
+}
+
+.option {
+  font-size: small;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.option:hover {
+  background: var(--base-color);
+}
+
+.option:not(:last-child) {
+  border-bottom: var(--border);
+}
+
+#title-input,
+#rich-text-editor {
+  -webkit-appearance: none;
+  appearance: none;
+  display: block;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-size: 16px;
+  border: var(--border);
+}
+
+#title-input {
+  border-radius: var(--border-radius);
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+#title-input::placeholder {
+  color: #333;
+}
+
+#rich-text-editor {
+  flex-grow: 1;
+  margin-top: 0;
+  height: 300px;
+  resize: vertical;
+  overflow-y: scroll;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+#rich-text-editor:empty::before {
+  content: attr(placeholder);
+  pointer-events: none;
+}
+
+/* --------------------
+    詳細表示用モーダル
+-------------------- */
+
+#detail-modal-body {
+  word-wrap: break-word;
+  white-space: pre-wrap;
+}
+
+#write-date {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+/* --------------------
+      設定用モーダル
+-------------------- */
+
+#settings-modal h3 {
+  margin: 0;
+}
+
+#settings-modal p {
+  margin: 10px 0;
+}
+
+.hr {
+  width: 100%;
+  height: 1px;
+  padding: 0;
+  margin: 20px 0;
+  border-radius: 0.5px;
+  background: #bdc3c7;
+}
+
+/* --------------------
+        その他
+-------------------- */
+
+.card-title:empty::before,
+#detail-modal-title:empty::before {
+  content: "無題";
+  color: #777;
+}
+
+#detail-modal-body:empty::before {
+  content: 'コンテンツがありません';
+  color: #777;
+}
+
+#card-list:empty::before {
+  color: #555;
+  content: "保存したメモはここに表示されます✍";
+  text-align: center;
+  white-space: pre;
+  font-size: large;
+  display: block;
+  width: 100%;
+}
+
+#edit-modal .modal-footer::before {
+  content: "";
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <!-- インラインスクリプトの実行禁止 -->
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self';">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta property="og:title" content="Notes">
+  <meta property="og:url" content="https://kaisei-yoneyama.github.io/notes/">
+  <meta property="og:description" content="IndexedDB を使用したメモアプリです">
+
+  <link rel="stylesheet" href="./styles/style.css">
+  <link rel="stylesheet" href="./styles/button.css">
+  <link rel="stylesheet" href="./styles/web-components/card.css">
+  <link rel="stylesheet" href="./styles/web-components/modal.css">
+
+  <title>Notes</title>
+</head>
+<body>
+  <!-- ナビゲーションバー -->
+  <nav class="navbar" id="sticky-navbar">
+    <div class="navbar-inner">
+      <h1>Notes</h1>
+      <div class="buttons">
+        <button class="button" id="create-button">作成</button>
+        <button class="button" id="settings-button">設定</button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- メインコンテンツ -->
+  <main class="container">
+    <input id="search-input" type="text" placeholder="検索">
+    <div id="card-list"></div>
+  </main>
+
+  <!-- 作成・編集用モーダル -->
+  <modal-component id="edit-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="edit-modal-title" class="modal-title">作成</h3>
+        <button class="modal-close-button"></button>
+      </div>
+      <div class="modal-body">
+        <input type="hidden" id="metadata">
+        <input type="text" id="title-input" placeholder="タイトル" tabindex="1">
+        <div class="toolbar">
+          <div class="tools">
+            <button id="remove-format-button" class="tool"></button>
+            <div id="font-size-button" class="tool">
+              <ul class="select">
+                <li class="option" data-value="xx-small">xx-small</li>
+                <li class="option" data-value="x-small">x-small</li>
+                <li class="option" data-value="small">small</li>
+                <li class="option" data-value="medium">medium</li>
+                <li class="option" data-value="large">large</li>
+                <li class="option" data-value="x-large">x-large</li>
+                <li class="option" data-value="xx-large">xx-large</li>
+                <li class="option" data-value="xxx-large">xxx-large</li>
+              </ul>
+            </div>
+            <div id="font-color-button" class="tool">
+              <ul class="select">
+                <li class="option" data-value="red">Red</li>
+                <li class="option" data-value="blue">Blue</li>
+                <li class="option" data-value="green">Green</li>
+                <li class="option" data-value="yellow">Yellow</li>
+                <li class="option" data-value="purple">Purple</li>
+                <li class="option" data-value="orange">Orange</li>
+                <li class="option" data-value="black">Black</li>
+                <li class="option" data-value="grey">Grey</li>
+              </ul>
+            </div>
+            <input type="file" id="file-input" multiple>
+            <label for="file-input" class="tool"></label>
+            <button id="link-button" class="tool"></button>
+            <button id="html-button" class="tool"></button>
+          </div>
+          <div class="commands">
+            <button id="undo-button" class="tool command"></button>
+            <div class="line"></div>
+            <button id="redo-button" class="tool command"></button>
+          </div>
+        </div>
+        <wysiwyg-editor id="rich-text-editor" placeholder="コンテンツ" tabindex="2"></wysiwyg-editor>
+      </div>
+      <div class="modal-footer">
+        <div class="buttons">
+          <button id="save-copy-as-button" class="button">複製保存</button>
+          <button id="save-button" class="button">保存</button>
+        </div>
+      </div>
+    </div>
+  </modal-component>
+  
+  <!-- 詳細表示用モーダル -->
+  <modal-component id="detail-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 id="detail-modal-title" class="modal-title"></h3>
+        <button class="modal-close-button"></button>
+      </div>
+      <div id="detail-modal-body" class="modal-body"></div>
+      <div class="modal-footer">
+        <span id="write-date"></span>
+        <div class="buttons">
+          <button id="edit-button" class="button">編集</button>
+          <button id="delete-button" class="button">削除</button>
+        </div>
+      </div>
+    </div>
+  </modal-component>
+  
+  <!-- 設定用モーダル -->
+  <modal-component id="settings-modal" class="modal-overlay hidden">
+    <div class="modal">
+      <div class="modal-header">
+        <h3 class="modal-title">設定</h3>
+        <button class="modal-close-button"></button>
+      </div>
+      <div class="modal-body">
+        <h3>デスクトップ通知</h3>
+        <p id="permission-output">メモを保存・更新した際に通知されます</p>
+        <button id="request-permission-button" class="button">デスクトップ通知を許可する</button>
+        <div class="hr"></div>
+        <h3>ストレージ</h3>
+        <p id="estimate-output"></p>
+        <button id="clear-site-data-button" class="button">すべてのデータを削除する</button>
+      </div>
+    </div>
+  </modal-component>
+
+  <!-- Custom Elements -->
+  <script src="./scripts/web-components/card.js"></script>
+  <script src="./scripts/web-components/modal.js"></script>
+  <script src="./scripts/web-components/editor.js"></script>
+
+  <script src="./scripts/main.js"></script>
+  <script src="./scripts/style.js"></script>
+  <script src="./scripts/search.js"></script>
+  <script src="./scripts/edit.js" type="module"></script>
+  <script src="./scripts/setting.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+@import url('./util.css');
+
+.button {
+  appearance: none;
+  display: inline-block;
+  white-space: nowrap;
+  text-align: center;
+  padding: 10px 15px;
+  margin: 0;
+  font-size: 15px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  border-radius: var(--border-radius);
+  background: #333;
+  color: #fff;
+  user-select: none;
+  -ms-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  transition: all 500ms;
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttons > .button:not(:last-child) {
+  margin-right: 10px;
+}
+
+/* ----- 個別の設定 ----- */
+
+/* 設定ボタン */
+#settings-button { background: #16a085; }
+#settings-button:hover { background: #12856e; }
+
+/* 作成ボタン */
+#create-button { background: #f39c12; }
+#create-button:hover { background: #ce830a; }
+
+/* 保存ボタン */
+#save-button { background: #3498db; }
+#save-button:hover { background: #2980b9; }
+
+/* 複製保存ボタン */
+#save-copy-as-button { background: #16a085; }
+#save-copy-as-button:hover { background: #12856e; }
+
+/* 編集ボタン */
+#edit-button { background: #0c9dc9; }
+#edit-button:hover { background: #0b8db5; }
+
+/* 削除ボタン */
+#delete-button { background: #b8113f; }
+#delete-button:hover { background: #a60f39; }
+
+/* 通知許可ボタン */
+#request-permission-button { background-color: #104ca5; }
+#request-permission-button:hover { background-color: #0042a5; }
+
+/* サイトデータ全削除ボタン */
+#clear-site-data-button { background: #b8113f; }
+#clear-site-data-button:hover { background: #a60f39; }
